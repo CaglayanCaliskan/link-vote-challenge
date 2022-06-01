@@ -1,0 +1,25 @@
+.toast {
+  color: black;
+  border: 1px solid black;
+  padding: 10px 50px;
+  transition: all 0.5s ease-in-out;
+  position: absolute;
+  right: -150px;
+  bottom: 0;
+  opacity: 0.5;
+  margin-bottom: 5px;
+}
+.toast.add {
+  right: 20px;
+  opacity: 1;
+  border: 1px solid green;
+  background-color: rgb(141, 198, 141);
+  color: green;
+}
+.toast.delete {
+  right: 20px;
+  opacity: 1;
+  border: 1px solid red;
+  background-color: rgb(163, 71, 71);
+  color: #fff;
+}
