@@ -12,6 +12,7 @@ export const LinkProvider = ({children}) => {
     link: {},
     show: false,
   });
+  const [filteredLinkItems, setFilteredLinkItems] = useState([]);
   const [linkItems, setLinkItems] = useState([]);
   // fetch linkItems from localStorage
   useEffect(() => {
@@ -39,7 +40,7 @@ export const LinkProvider = ({children}) => {
     }, 1500);
     //adding localStorage
     const localData = checkLocalStorage();
-    localData.push(newLinkItem);
+    localData.unshift(newLinkItem);
     localStorage.setItem('linkItems', JSON.stringify(localData));
   };
 
@@ -98,6 +99,20 @@ export const LinkProvider = ({children}) => {
     localStorage.setItem('linkItems', JSON.stringify(localData));
   };
 
+  //Filter function***********
+
+  const handleFilter = (filter) => {
+    const copyOfLinkItems = linkItems;
+    // filtered by point
+    if (filter === 'most') {
+      setFilteredLinkItems(copyOfLinkItems.sort((a, b) => b.point - a.point));
+    }
+    if (filter === 'less') {
+      setFilteredLinkItems(copyOfLinkItems.sort((a, b) => a.point - b.point));
+    }
+    return filteredLinkItems;
+  };
+
   return (
     <LinkContext.Provider
       value={{
@@ -110,6 +125,8 @@ export const LinkProvider = ({children}) => {
         handleAdd,
         handleDelete,
         handleUpdate,
+        handleFilter,
+        filteredLinkItems,
       }}
     >
       {children}
