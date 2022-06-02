@@ -1,19 +1,39 @@
-const LinkItem = () => {
+import {useState, useContext} from 'react';
+import LinkContext from '../context/LinkContext';
+
+const LinkItem = ({link}) => {
+  const {setShowDeleteModal} = useContext(LinkContext);
+  const [deleteBox, setDeleteBox] = useState(false);
   return (
-    <div className='link'>
+    <div
+      className='link'
+      onMouseEnter={() => setDeleteBox(true)}
+      onMouseLeave={() => setDeleteBox(false)}
+    >
       <div className='vote-box'>
-        <span>0</span>
+        <span>{link.point}</span>
         <p>POINTS</p>
       </div>
       <div className='info'>
-        <div className='title'>Stack Overflow</div>
-        <div className='url'>www.asdasd</div>
+        <div className='title'>{link.name}</div>
+        <div className='url'>{link.url}</div>
         <div className='vote-update'>
           <div className='vote vote-up'> &uarr; Up Vote</div>
           <div className='vote vote-down'>&#8595; Down Vote</div>
         </div>
       </div>
-      <div className='btn delete-box'>x</div>
+      <div
+        className='btn delete-box'
+        style={{display: `${deleteBox ? '' : 'none'}`}}
+        onClick={() =>
+          setShowDeleteModal({
+            link: link,
+            show: true,
+          })
+        }
+      >
+        x
+      </div>
     </div>
   );
 };

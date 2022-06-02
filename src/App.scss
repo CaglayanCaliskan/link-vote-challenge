@@ -55,6 +55,14 @@ header {
 .btn.submit:hover {
   background-color: green;
 }
+.btn:disabled {
+  background-color: #ccc;
+  color: #fff;
+}
+.btn:disabled:hover {
+  background-color: #ccc;
+  color: #fff;
+}
 //***
 // **********Form component styles**********
 //***
@@ -220,6 +228,11 @@ header {
     }
     .link:hover {
       background: #ddd;
+    }
+    .empy-box {
+      width: 100%;
+      display: flex;
+      justify-content: center;
     }
   }
   .page-changer {
