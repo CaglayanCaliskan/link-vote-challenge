@@ -2,12 +2,13 @@ import {Link} from 'react-router-dom';
 import Toast from './shared/Toast/Toast';
 import {useContext, useState} from 'react';
 import LinkContext from '../context/LinkContext';
+import {v4 as uuidv4} from 'uuid';
 
 const LinkForm = () => {
-  const {toast, handleAdd, linkItems} = useContext(LinkContext);
+  const {toast, handleAdd} = useContext(LinkContext);
 
   const [newLinkItem, setNewLinkItem] = useState({
-    id: linkItems.length,
+    id: uuidv4(),
     name: '',
     url: '',
     point: 0,
@@ -17,7 +18,7 @@ const LinkForm = () => {
     <form className='card form'>
       <div className='move-back'>
         <Link to='/'>
-          <p style={{color: `${toast ? 'orange' : ''}`}}>
+          <p style={{color: `${toast.show ? 'orange' : ''}`}}>
             &#8592; Return to List
           </p>{' '}
         </Link>
@@ -57,7 +58,7 @@ const LinkForm = () => {
               e.preventDefault();
               setNewLinkItem({
                 ...newLinkItem,
-                id: linkItems.length + 1,
+                id: uuidv4(),
               });
               handleAdd(newLinkItem);
             }}

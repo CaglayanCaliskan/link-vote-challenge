@@ -3,13 +3,17 @@ import {createContext, useState, useEffect} from 'react';
 const LinkContext = createContext();
 
 export const LinkProvider = ({children}) => {
-  const [toast, setToast] = useState(false);
+  const [toast, setToast] = useState({
+    link: {},
+    show: false,
+    operation: '',
+  });
   const [showDeleteModal, setShowDeleteModal] = useState({
     link: {},
     show: false,
   });
   const [linkItems, setLinkItems] = useState([]);
-  // init linkItems from localStorage
+  // fetch linkItems from localStorage
   useEffect(() => {
     const localData = checkLocalStorage();
     if (localData) {
@@ -20,10 +24,18 @@ export const LinkProvider = ({children}) => {
   //Add function**********
 
   const handleAdd = (newLinkItem) => {
-    setLinkItems([...linkItems, newLinkItem]);
-    setToast(true);
+    setLinkItems([newLinkItem, ...linkItems]);
+    setToast({
+      link: newLinkItem,
+      show: true,
+      operation: 'added',
+    });
     setTimeout(() => {
-      setToast(false);
+      setToast({
+        link: {},
+        show: false,
+        operation: '',
+      });
     }, 1500);
     //adding localStorage
     const localData = checkLocalStorage();
@@ -42,8 +54,21 @@ export const LinkProvider = ({children}) => {
       }
     });
     localStorage.setItem('linkItems', JSON.stringify(localData));
+    //toast message
+    setToast({
+      link: selectedItem,
+      show: true,
+      operation: ' deleted',
+    });
+    setTimeout(() => {
+      setToast({
+        link: {},
+        show: false,
+        operation: '',
+      });
+    }, 1500);
   };
-  //Check LocalStorage
+  //Check LocalStorage**********
   const checkLocalStorage = () => {
     let localData;
     if (localStorage.getItem('linkItems') === null) {
@@ -52,6 +77,25 @@ export const LinkProvider = ({children}) => {
       localData = JSON.parse(localStorage.getItem('linkItems'));
     }
     return localData;
+  };
+  ///Update Vode function***********
+  const handleUpdate = (updatedItem, classname) => {
+    if (classname === 'vote vote-up') {
+      updatedItem.point++;
+    } else {
+      updatedItem.point--;
+    }
+    setLinkItems(
+      linkItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+    );
+    //updating localStorage
+    const localData = checkLocalStorage();
+    localData.forEach((item, index) => {
+      if (item.id === updatedItem.id) {
+        localData[index] = updatedItem;
+      }
+    });
+    localStorage.setItem('linkItems', JSON.stringify(localData));
   };
 
   return (
@@ -65,6 +109,7 @@ export const LinkProvider = ({children}) => {
         setLinkItems,
         handleAdd,
         handleDelete,
+        handleUpdate,
       }}
     >
       {children}
