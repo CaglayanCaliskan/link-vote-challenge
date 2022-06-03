@@ -71,6 +71,7 @@ const LinkList = () => {
       </div>
       <div className='page-changer'>
         <Pagination
+          currentPage={currentPage}
           postPerPage={postPerPage}
           totalPosts={linkItems.length}
           paginate={paginate}

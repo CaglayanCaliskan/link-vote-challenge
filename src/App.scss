@@ -247,9 +247,13 @@ header {
     ul {
       display: flex;
       justify-content: center;
-      li {
-        margin: 0 5px;
+      .page-item {
+        margin: 0 10px;
         font-size: 1.2rem;
+      }
+      .page-item.active {
+        border-bottom: 1px solid #aaa;
+        color: green;
       }
       li:hover {
         cursor: pointer;
