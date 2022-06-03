@@ -5,7 +5,7 @@ const Header = () => {
     <header>
       <Link to='/'>
         <h2>
-          <span>Digitastic</span> .Plus
+          <span>Digitastic</span>.Plus
         </h2>
       </Link>
       <Link to='/form'>
